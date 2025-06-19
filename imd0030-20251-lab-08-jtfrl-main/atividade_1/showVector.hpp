@@ -1,19 +1,10 @@
-/*
-
-::>OBS:
-IMPORTANTE! Deve ser incluído um Makefile, no diretório da atividade (/atividade_1), 
-que ao executar make gere um binário chamado estatistica.
-
-
-*/
 #include <vector>
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
 
 class sVetor{
-    std::vector<int> dados; //apenas inteiros
-        //usar size para obter tam
+    std::vector<int> dados; 
 
     public:
     sVetor() = default;
@@ -33,22 +24,6 @@ class sVetor{
             }
         }
     }
-    
-        
-        /*
-        else if(v==-1){
-            contaV(dados);
-            avV(dados);
-            std::vector<int> dadosNovo=bbsort(dados);
-            int mVal=dados.size()-1;
-            std::cout<<"Menor valor: "<<dadosNovo[0];
-            std::cout<<"Maior valor: "<<dadosNovo[mVal]<<std::endl;
-            s_Vector(dadosNovo);
-            std::cout<<"Digite o valor para busca no vetor: "<<std::endl;
-            std::cin>>k;
-            seqSearch(dados);
-        }
-        */
 
     void contaV(){
         std::cout<<"Quantidade de números: "<<dados.size()<<std::endl;
