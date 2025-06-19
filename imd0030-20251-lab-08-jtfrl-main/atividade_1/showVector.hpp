@@ -1,14 +1,4 @@
 /*
-Permita que o usuário digite uma sequência de números inteiros positivos 
-(digitar qualquer número negativo encerra a entrada).
-
-Exiba:
-A quantidade de números digitados.
-A média dos valores.
-O menor e o maior valor.
-Exiba os números em ordem crescente.
-Permita que o usuário pesquise um único número e informe se ele está na lista.
-Encerre o programa.
 
 ::>OBS:
 IMPORTANTE! Deve ser incluído um Makefile, no diretório da atividade (/atividade_1), 
@@ -19,56 +9,65 @@ que ao executar make gere um binário chamado estatistica.
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 class sVetor{
     std::vector<int> dados; //apenas inteiros
-    int soma=0; //variaveis para obter média
-    //usar size para obter tam
+        //usar size para obter tam
 
     public:
-    sVetor(): dados({0}){}
-
-    sVetor (std::vector<int> dados): dados(dados){ //usa o próprio atributo
-        //implementação
-    }
+    sVetor() = default;
 
     ~sVetor(){
         dados.clear();
     }
 
-    void inVetor(int v){
+    void inVetor(){
+        int v;
         std::cout<<"Digite números inteiros (-1 para sair): "<<std::endl;
-        std::cin>>v;
-        if(v!=-1 && v>0){
-            dados.push_back(v);
-        }else if(v==-1){
+        while(std::cin>>v){ //enquanto houver input
+            if(v==-1){
+                break;
+            }else{
+                dados.push_back(v);
+            }
+        }
+    }
+    
+        
+        /*
+        else if(v==-1){
             contaV(dados);
             avV(dados);
             std::vector<int> dadosNovo=bbsort(dados);
+            int mVal=dados.size()-1;
             std::cout<<"Menor valor: "<<dadosNovo[0];
-            std::cout<<"Maior valor: "<<dadosNovo[dadosNovo.size()-1]<<std::endl;
-            //std::cout<<"Vetor ordendado: "<<bbsort(dados); necessário sobrecarregar
-
+            std::cout<<"Maior valor: "<<dadosNovo[mVal]<<std::endl;
+            s_Vector(dadosNovo);
+            std::cout<<"Digite o valor para busca no vetor: "<<std::endl;
+            std::cin>>k;
+            seqSearch(dados);
         }
-    }
+        */
 
-    void contaV(std::vector<int> dados){
+    void contaV(){
         std::cout<<"Quantidade de números: "<<dados.size()<<std::endl;
     }
 
-    void avV(std::vector<int> dados){
-        for(int i=0; i<dados.size(); i++){
+    void avV(){
+        int soma=0;
+        for(long unsigned int i=0; i<dados.size(); i++){
             soma+=dados[i];
         }
-        double media=soma/dados.size();
-        std::cout<<"Média: "<<media<<std::endl;
+        double media=static_cast<double>(soma)/dados.size();
+        std::cout<<"Média: "<<std::fixed<<std::setprecision(2)<<media<<std::endl;
     }
 
     std::vector<int> bbsort(std::vector<int> dados){
         int tam=dados.size();
         for(int i=0; i<tam-1; i++){
             for(int j=0;j<tam-1-i; j++){
-                if(v[j+1]<dados[j]){
+                if(dados[j+1]<dados[j]){
                     int t=dados[j];
                     dados[j]=dados[j+1];
                     dados[j+1]=t;
@@ -78,9 +77,57 @@ class sVetor{
         return dados;
     }
 
+    void s_Vector(){ 
+        std::vector<int> dadosNovo=bbsort(dados);
+        std::cout<<"Números ordenados: "<<std::endl;
+        for (int num:dadosNovo){
+            std::cout<<num<<" ";
+        }
+    }
+
     
+    int seqSearch(int k){
+        for(long unsigned int i=0; i<dados.size();i++){
+            if(k==dados[i]){
+                std::cout<<"O valor "<<dados[i]<<" está na lista."<<std::endl;
+                return dados[i];
+            }
+        }
+        return -1;
+    }
+
+    void getMaxMin(){
+        if(dados.empty()) std::cerr<<"Nenhum número foi digitado"<<std::endl;
+        return;
+        std::vector<int> dadosNovo=bbsort(dados);
+        int mVal=dados.size()-1;
+        std::cout<<"Menor valor: "<<dadosNovo[0];
+        std::cout<<"Maior valor: "<<dadosNovo[mVal]<<std::endl;
+    }
 
 
+    /* pode ser útil 
+
+    void sortVector(){
+        std::sort(dados.begin(), dados.end());
+        std::cout<<"Números em ordem crescente: "<<std::endl;
+        for(int num:dados) std::cout<<num<<" "<<std::endl;
+        std::cout<<std::endl;
+    }
     
-
+    */
+    
 };
+
+/*
+alternativa para inVetor
+
+ while (true) {
+        std::cin >> v;
+        if (v == -1) break; // Stop input when -1 is entered
+        dados.push_back(v);
+    }
+
+
+:> métodos como begin, find, etc, são do algorithm
+*/
